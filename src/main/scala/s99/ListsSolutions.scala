@@ -11,8 +11,8 @@ trait ListsSolutions {
   def length[T](list: List[T]): Int = list.size 
   def reverse[T](list: List[T]): List[T] = list.reverse
   def isPalindrome[T](list: List[T]): Boolean = list.zipWithIndex.map(tuple => tuple._1 == list(list.size - (1+tuple._2))).forall(_ == true)
-  def flatten[T](list: List[Any]): List[T] = ???
-  def compress[T](list: List[T]): T = ???
+  def flatten[T](list: List[Any]): List[T] = list.flatMap({case a:List[_] => flatten(a); case b:T => List(b)})
+  def compress[T](list: List[T]): List[T] = list.foldRight(List[T]())((elem,l) => { if (l.isEmpty || (elem != l.head)) elem :: l else l }) 
   def pack[T](list: List[T]): T = ???
   def encode[T](list: List[T]): List[(Int, T)] = ???
   def encodeModified[T](list: List[T]): List[(Int, T)] = ???
