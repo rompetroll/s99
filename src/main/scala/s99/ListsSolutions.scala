@@ -5,12 +5,12 @@ import org.specs2.matcher.ThrownExpectations
 trait ListsSolutions {
   import Solutions._
 
-  def last[T](list: List[T]): T = ???
-  def penultimate[T](list: List[T]): T = ???
-  def nth[T](n: Int, list: List[T]): T = ???
-  def length[T](list: List[T]): T = ???
-  def reverse[T](list: List[T]): T = ???
-  def isPalindrome[T](list: List[T]): Boolean = ???
+  def last[T](list: List[T]): T = list.reverse.head
+  def penultimate[T](list: List[T]): T = list.reverse.tail.head
+  def nth[T](n: Int, list: List[T]): T = list(n)
+  def length[T](list: List[T]): Int = list.size 
+  def reverse[T](list: List[T]): List[T] = list.reverse
+  def isPalindrome[T](list: List[T]): Boolean = list.zipWithIndex.map(tuple => tuple._1 == list(list.size - (1+tuple._2))).forall(_ == true)
   def flatten[T](list: List[Any]): List[T] = ???
   def compress[T](list: List[T]): T = ???
   def pack[T](list: List[T]): T = ???
