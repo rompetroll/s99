@@ -13,7 +13,7 @@ trait ListsSolutions {
   def isPalindrome[T](list: List[T]): Boolean = list.zipWithIndex.map(tuple => tuple._1 == list(list.size - (1+tuple._2))).forall(_ == true)
   def flatten[T](list: List[Any]): List[T] = list.flatMap({case a:List[_] => flatten(a); case b:T => List(b)})
   def compress[T](list: List[T]): List[T] = list.foldRight(List[T]())((elem,l) => { if (l.isEmpty || (elem != l.head)) elem :: l else l }) 
-  def pack[T](list: List[T]): T = ???
+  def pack[T](list: List[T]): List[List[T]] = list.foldRight(List[List[T]]())((elem, l) => { if (l.isEmpty || l.head(0) != elem) {(List[T]() :: l).updated(0, List[T](elem))} else l.updated(0, elem :: l.head)} )
   def encode[T](list: List[T]): List[(Int, T)] = ???
   def encodeModified[T](list: List[T]): List[(Int, T)] = ???
   def decode[T](list: List[(Int, T)]): List[T] = ???
