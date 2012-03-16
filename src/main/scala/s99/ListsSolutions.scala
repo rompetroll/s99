@@ -14,9 +14,9 @@ trait ListsSolutions {
   def flatten[T](list: List[Any]): List[T] = list.flatMap({case a:List[_] => flatten(a); case b:T => List(b)})
   def compress[T](list: List[T]): List[T] = list.foldRight(List[T]())((elem,l) => { if (l.isEmpty || (elem != l.head)) elem :: l else l }) 
   def pack[T](list: List[T]): List[List[T]] = list.foldRight(List[List[T]]())((elem, l) => { if (l.isEmpty || l.head(0) != elem) {(List[T]() :: l).updated(0, List[T](elem))} else l.updated(0, elem :: l.head)} )
-  def encode[T](list: List[T]): List[(Int, T)] = ???
-  def encodeModified[T](list: List[T]): List[(Int, T)] = ???
-  def decode[T](list: List[(Int, T)]): List[T] = ???
+  def encode[T](list: List[T]): List[(Int, T)] = pack(list).map(innerList => (innerList.size, innerList.head))
+  def encodeModified[T](list: List[T]): List[Any] = pack(list).map(innerList => innerList match { case l:List[_] if l.size == 1 => l.head; case _ => (innerList.size, innerList.head)})
+  def decode[T](list: List[(Int, T)]): List[T] = list.map(tuple => (1 to tuple._1).map(_ => tuple._2)).flatten
   def encodeDirect[T](list: List[T]): List[(Int, T)] = ???
   def duplicate[T](list: List[T]): List[T] = ???
   def duplicateN[T](n: Int, list: List[T]): List[T] = ???
